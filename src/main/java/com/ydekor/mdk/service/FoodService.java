@@ -11,13 +11,23 @@ import java.util.List;
 @Service
 public class FoodService {
     private final FoodRepository foodRepository;
-    public void create() {
-        Food food = Food
-                .builder()
-                .cost(300)
-                .name("kokoko")
-                .build();
-        foodRepository.save(food);
+
+    public Food create(Food food) {
+        if (food.getId() != null) {
+            throw new RuntimeException("id is not allowed here");
+        }
+        return foodRepository.save(food);
+    }
+
+    public Food update(Food food) {
+        if (food.getId() == null) {
+            throw new RuntimeException("id is required");
+        }
+        return foodRepository.save(food);
+    }
+
+    public void delete(Long id) {
+        foodRepository.deleteById(id);
     }
 
     public List<Food> getAll() {
