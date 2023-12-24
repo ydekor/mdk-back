@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+@RequiredArgsConstructor // подгрузить финальные поля
 @RestController // аннотация
-@RequestMapping("/") // эндпоинт
+@RequestMapping("/food") // эндпоинт
 public class FoodController {
     private final FoodService foodService;
 
