@@ -3,9 +3,9 @@ package com.ydekor.mdk.service;
 import com.ydekor.mdk.model.Food;
 import com.ydekor.mdk.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -30,7 +30,7 @@ public class FoodService {
         foodRepository.deleteById(id);
     }
 
-    public List<Food> getAll() {
-        return foodRepository.findAll();
+    public Page<Food> getAll(Pageable pageable) {
+        return foodRepository.findAll(pageable);
     }
 }

@@ -1,6 +1,7 @@
 package com.ydekor.mdk.controller;
 
-import com.ydekor.mdk.model.Department;
+import com.ydekor.mdk.dto.DepartmentDTO;
+import com.ydekor.mdk.mapper.DepartmentMapper;
 import com.ydekor.mdk.service.DepartmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.List;
 @RequestMapping("/department")
 public class DepartmentController {
     private final DepartmentService departmentService;
+    private final DepartmentMapper departmentMapper;
+
 
     @DeleteMapping("/{id}")
     public String deleteRecord(@PathVariable Long id) {
@@ -21,17 +24,17 @@ public class DepartmentController {
     }
 
     @PutMapping
-    public Department updateRecord(@RequestBody Department department) {
-        return departmentService.update(department);
+    public DepartmentDTO updateRecord(@RequestBody DepartmentDTO departmentDTO) {
+        return departmentMapper.sourceToDto(departmentService.update(departmentMapper.dtoToSource(departmentDTO)));
     }
 
     @PostMapping
-    public Department createRecord(@RequestBody Department department) {
-        return departmentService.create(department);
+    public DepartmentDTO createRecord(@RequestBody DepartmentDTO departmentDTO) {
+        return departmentMapper.sourceToDto(departmentService.create(departmentMapper.dtoToSource(departmentDTO)));
     }
 
     @GetMapping // обработка get запросов
-    public List<Department> getAll() {
-        return departmentService.getAll();
+    public List<DepartmentDTO> getAll() {
+        return departmentMapper.sourcesToDtos(departmentService.getAll());
     }
 }

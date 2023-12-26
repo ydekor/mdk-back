@@ -3,6 +3,8 @@ package com.ydekor.mdk.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,4 +25,7 @@ public class User {
     @JoinColumn(name = "department_id")
     @ManyToOne
     private Department department;
+
+    @OneToMany(mappedBy = "user")
+    private List<Food> foods;
 }

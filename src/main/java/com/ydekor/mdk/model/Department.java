@@ -1,11 +1,10 @@
 package com.ydekor.mdk.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,4 +17,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //след id генерирует db
     private Long id;
     private String name;
+
+    @OneToMany(mappedBy = "department")
+    private List<User> users;
 }

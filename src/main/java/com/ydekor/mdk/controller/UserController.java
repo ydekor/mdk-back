@@ -1,6 +1,7 @@
 package com.ydekor.mdk.controller;
 
-import com.ydekor.mdk.model.User;
+import com.ydekor.mdk.dto.UserDTO;
+import com.ydekor.mdk.mapper.UserMapper;
 import com.ydekor.mdk.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @DeleteMapping("/{id}")
     public String deleteRecord(@PathVariable Long id) {
@@ -21,17 +23,17 @@ public class UserController {
     }
 
     @PutMapping
-    public User updateRecord(@RequestBody User user) {
-        return userService.update(user);
+    public UserDTO updateRecord(@RequestBody UserDTO userDTO) {
+        return userMapper.sourceToDto(userService.update(userMapper.dtoToSource(userDTO)));
     }
 
     @PostMapping
-    public User createRecord(@RequestBody User user) {
-        return userService.create(user);
+    public UserDTO createRecord(@RequestBody UserDTO userDTO) {
+        return userMapper.sourceToDto(userService.create(userMapper.dtoToSource(userDTO)));
     }
 
     @GetMapping // обработка get запросов
-    public List<User> getAll() {
-        return userService.getAll();
+    public List<UserDTO> getAll() {
+        return userMapper.sourcesToDtos(userService.getAll());
     }
 }
